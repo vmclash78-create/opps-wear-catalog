@@ -107,7 +107,7 @@ export default function ProductDetail() {
           )}
 
           <a
-            href={`https://wa.me/5500000000000?text=${whatsappMessage}`}
+            href={`https://wa.me/5588992376857?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-3.5 bg-[#25D366] text-background font-medium rounded-full hover:bg-[#20bd5a] transition-colors text-sm"
