@@ -1,22 +1,35 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { signIn, isAdmin, user } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // If already admin, redirect
+  if (user && isAdmin) {
+    navigate('/admin', { replace: true });
+    return null;
+  }
 
-    // LOGIN FIXO TEMPORÁRIO
-    if (email === "admin@opps.com" && password === "123456") {
-      navigate('/admin');
-    } else {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await signIn(email, password);
+    setLoading(false);
+
+    if (error) {
       toast.error('Credenciais inválidas');
+      return;
     }
+
+    // Wait briefly for admin check
+    setTimeout(() => navigate('/admin'), 500);
   };
 
   return (
@@ -41,7 +54,7 @@ export default function AdminLogin() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-card border border-border rounded-lg text-sm"
+              className="w-full px-4 py-2.5 bg-card border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
             />
           </div>
           <div>
@@ -51,14 +64,15 @@ export default function AdminLogin() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2.5 bg-card border border-border rounded-lg text-sm"
+              className="w-full px-4 py-2.5 bg-card border border-border rounded-lg text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
             />
           </div>
           <button
             type="submit"
-            className="w-full py-3 bg-foreground text-background rounded-lg text-sm font-medium"
+            disabled={loading}
+            className="w-full py-3 bg-foreground text-background rounded-lg text-sm font-medium hover:bg-foreground/90 transition-colors disabled:opacity-50"
           >
-            Entrar
+            {loading ? 'Entrando...' : 'Entrar'}
           </button>
         </form>
       </motion.div>

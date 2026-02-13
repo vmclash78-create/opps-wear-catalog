@@ -13,7 +13,7 @@ export default function Contact() {
 
         <div className="grid gap-4">
           <a
-            href="https://wa.me/5588992376857"
+            href="https://wa.me/5500000000000"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 p-6 rounded-xl bg-card border border-border hover:border-muted-foreground/30 transition-colors group"
@@ -23,7 +23,7 @@ export default function Contact() {
             </div>
             <div>
               <h3 className="font-sans text-sm font-semibold text-foreground">WhatsApp</h3>
-              <p className="text-sm text-muted-foreground">(88) 99237-6857</p>
+              <p className="text-sm text-muted-foreground">(00) 00000-0000</p>
             </div>
           </a>
 
